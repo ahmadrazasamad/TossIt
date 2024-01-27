@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toss It!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1><img src="" alt="logo"></h1> <!-- logo will be added here afterwards -->
+
+    <div id="stats"> <!-- stats will be added here from js -->
+        <p id="tail-stats"></p>
+        <p id="heads-stats"></p>
+    </div>
+
+    <div id="coin">
+        <div id="head-coin">
+            <img src="" alt="head-coin">
+        </div>
+        <div id="tail-coin">
+            <img src="" alt="tail-coin">
+        </div>
+    </div>
+
+    <div id="player-selection">
+        <div id="p1">
+            <div class="input-box">
+                <input type="text" id="player1-name" oninput="checkTxt(this)" required />
+                <span>Player 1 Name</span>
+                <div class="error-msg">*Please enter a valid value.</div>
+            </div>
+
+            <div>
+                <label for="heads1">Heads</label>
+                <input type="radio" name="player1-choice" id="heads1" value="Heads" onchange="toggleChck(this)" class="error-radio" />
+                <label for="tails1">Tails</label>
+                <input type="radio" name="player1-choice" id="tails1" value="Tails" onchange="toggleChck(this)" />
+                <span class="error-msg">*Please select one.</span>
+            </div>
+        </div>
+
+        <div id="p2">
+            <div class="input-box">
+                <input type="text" id="player2-name" oninput="checkTxt(this)" required />
+                <span>Player 2 Name</span>
+                <div class="error-msg">*Please enter a valid value.</div>
+            </div>
+
+            <div>
+                <label for="heads2">Heads</label>
+                <input type="radio" name="player2-choice" id="heads2" value="Heads" onchange="toggleChck(this)" />
+                <label for="tails2">Tails</label>
+                <input type="radio" name="player2-choice" id="tails2" value="Tails" onchange="toggleChck(this)" />
+                <span class="error-msg">*Please select one.</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="status">
+        <p></p>
+    </div>
+
+    <button class="btn" id="se-btn">Single Elimination</button>
+    <button class="btn" id="bo3-btn">Best of Three</button>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

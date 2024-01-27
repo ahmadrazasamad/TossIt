@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.input-box {
+    position: relative;
+    width: 250px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: #1d2b3a;
+    border-radius: 10px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    transition: 0.3s
+}
+
+.input-box span {
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.25);
+    padding: 10px;
+    pointer-events: none;
+    font-size: 1em;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.input-box input:valid~span,
+.input-box input:focus~span {
+    color: #fff;
+    transform: translateX(10px) translateY(-7px);
+    font-size: 0.65em;
+    padding: 0 10px;
+    background-color: #00dfc4;
+    letter-spacing: 0.2em;
+}
+
+.input-box input:valid,
+.input-box input:focus {
+    border: 1px solid #00dfc4;
+}
+
+.error input:valid~span,
+.error input:focus~span {
+    background-color: #ff0000;
+}
+
+.error input:valid,
+.error input:focus {
+    border: 1px solid #ff0000;
+}
+
+.error input {
+    border: 1px solid #ff0000;
+}
+
+.error-msg {
+    color: #ff0000;
+    font-size: 0.8em;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
+
+.error-msg-show {
+    opacity: 1;
+    height: auto;
+}
+
+#status {
+    display: none;
+}
