@@ -78,6 +78,10 @@
     height: auto;
 }
 
-#status {
+.status-h { /* status hidden */
     display: none;
+}
+
+.status-v { /* status visible */
+    display: block;
 }
