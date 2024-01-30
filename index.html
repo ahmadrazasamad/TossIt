@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toss It!</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -19,9 +20,10 @@
             <img src="" alt="tail-coin">
         </div>
     </div>
-
+    <i id="arrow-goback" class="bi bi-arrow-left" style="display: none;"></i>
     <div id="player-selection">
         <div id="p1">
+            <p id="p1-name"></p>
             <div class="input-box">
                 <input type="text" id="player1-name" oninput="checkTxt(this)" required />
                 <span>Player 1 Name</span>
@@ -38,6 +40,7 @@
         </div>
 
         <div id="p2">
+            <p id="p2-name" class="p-name"></p>
             <div class="input-box">
                 <input type="text" id="player2-name" oninput="checkTxt(this)" required />
                 <span>Player 2 Name</span>
@@ -54,10 +57,13 @@
         </div>
     </div>
 
-    <p id="status" class="status-h"></p>
+    <p id="status" style="display: none;"></p>
 
+    <button class="btn" id="fa-btn" style="display: none;">Flip Again</button>
     <button class="btn" id="se-btn">Single Elimination</button>
     <button class="btn" id="bo3-btn">Best of Three</button>
+
+    <table id="bo3-result" style="display: none;"></table>
 
     <script src="app.js"></script>
 </body>

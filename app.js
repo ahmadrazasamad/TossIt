@@ -1,5 +1,9 @@
 const seBtn = document.getElementById("se-btn");
 const bOf3Btn = document.getElementById("bo3-btn");
+const fABtn = document.getElementById("fa-btn");
+
+const p1SelName = document.getElementById("p1-name");
+const p2SelName = document.getElementById("p2-name");
 
 const p1NameInput = document.getElementById("player1-name");
 const p2NameInput = document.getElementById("player2-name");
@@ -8,6 +12,9 @@ const p1Choice = document.querySelectorAll(`input[name="player1-choice"]`);
 const p2Choice = document.querySelectorAll(`input[name="player2-choice"]`);
 
 const winStatus = document.getElementById("status");
+const bo3Table = document.getElementById("bo3-result");
+
+const goback = document.getElementById("arrow-goback");
 
 const checkTxt = element => {
     const elemValue = element.value.trim();
@@ -87,7 +94,7 @@ const toggleChck = (element) => {
         const heads = document.querySelector(`input[name="player1-choice"][value="Heads"]`);
         heads.checked = true;
     }
-    
+
     const elme1EM = element.parentElement.querySelector(".error-msg");
     elme1EM.classList.remove("error-msg-show");
 
@@ -121,29 +128,103 @@ const flipCoin = () => {
 
 const singleToss = () => {
     const res = chckPlayersData();
-    if (typeof (res) !== "object" && res.includes("Error")) {
+    if (typeof (res) !== "object") {
         return;
     } else {
         const tossResult = flipCoin();
-        winStatus.classList.remove("status-h");
-        winStatus.classList.add("status-v");
+        winStatus.style.display = "block";
         if (tossResult === res.p1Choice) {
             winStatus.innerHTML = `${res.p1Name} Wins`;
         } else {
             winStatus.innerHTML = `${res.p2Name} Wins`;
         }
-        resetInputValues();
+        res.winStatus = winStatus.innerText; // for 1st toss
         return res;
     }
 }
 
 seBtn.addEventListener("click", () => {
     singleToss();
+    resetInputValues();
 });
 
+let tossCount = 1;
+let bo3TossResult = [];
 bOf3Btn.addEventListener("click", () => {
     const res = singleToss(); // since for multiple times toss will be done once atleast, also collecting players data of players here from 1st toss
+    if (typeof (res) === "object") {
+        p1NameInput.parentElement.style.display = "none";
+        p1SelName.innerText = res.p1Name;
 
-    const p1SelDiv = document.getElementById("p1");
-    const p2SelDiv = document.getElementById("p2");
+        p2NameInput.parentElement.style.display = "none";
+        p2SelName.innerText = res.p2Name;
+
+        seBtn.style.display = "none";
+        bOf3Btn.style.display = "none";
+        fABtn.style.display = "inline";
+        bo3Table.style.display = "block";
+
+        bo3TossResult.push(res);
+        bo3Table.innerHTML += `
+            <tr>
+                <td>Toss ${tossCount}</td>
+                <td>${bo3TossResult[tossCount - 1].winStatus}</td>
+            </tr>
+        `;
+    }
 });
+
+const backToOrignalState = () => {
+    tossCount = 1;
+    p1NameInput.parentElement.style.display = "block";
+    p2NameInput.parentElement.style.display = "block";
+    seBtn.style.display = "inline";
+    bo3TossResult = [];
+    bOf3Btn.style.display = "inline";
+    bo3Table.innerHTML = "";
+    bo3Table.style.display = "none";
+    winStatus.style.display = "none";
+    p1SelName.style.display = "none";
+    p2SelName.style.display = "none";
+    goback.style.display = "none";
+    resetInputValues();
+};
+
+fABtn.addEventListener("click", () => {
+    if (tossCount < 3) {
+        const nextToss = singleToss();
+        if (typeof (nextToss) === "object") {
+            tossCount++;
+            bo3TossResult.push(nextToss);
+            bo3Table.innerHTML += `
+            <tr>
+                <td>Toss ${tossCount}</td>
+                <td>${bo3TossResult[tossCount - 1].winStatus}</td>
+            </tr>
+            `;
+        }
+    }
+    if (bo3TossResult.length > 1) {
+        for (let i = 0; i < bo3TossResult.length; i++) {
+            for (let j = i + 1; j < bo3TossResult.length; j++) {
+                if (bo3TossResult[j] && (bo3TossResult[i].winStatus === bo3TossResult[j].winStatus)) {
+                    winStatus.innerText = bo3TossResult[i].winStatus;
+                    fABtn.style.display = "none";
+                    goback.style.display = "block";
+                    setTimeout(() => {
+                        backToOrignalState();
+                    }, 3000);
+                }
+            }
+        }
+    }
+    if (bo3TossResult.length === 3) {
+        fABtn.style.display = "none";
+        goback.style.display = "block";
+        setTimeout(() => {
+            backToOrignalState();
+        }, 3000);
+    }
+});
+
+goback.addEventListener("click", () => backToOrignalState());
